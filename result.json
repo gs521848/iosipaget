@@ -1,5 +1,5 @@
 {
-    "engine": "unity",
-    "Speedup_Address": 28361604,
-    "Jump_Address": 0
+    "engine": "cocos",
+    "Speedup_Address": 16096280,
+    "Jump_Address": 6541108
 }

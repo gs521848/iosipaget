@@ -113,16 +113,20 @@ def main():
     try:
         machofile, resource_file = extract_ipa(args.ipa_file, "./output")
         print(f"需要修改的mach-o文件路径是{machofile}")
+        il2cpp_path = os.path.join(resource_file, "Frameworks", "UnityFramework.framework","UnityFramework")
+        mata_path = os.path.join(resource_file, "Data", "Managed","Metadata","global-metadata.dat")
+
+
         if ((SpeedUpUtils.find_hex_offset(machofile, Cocos.cocos_hex_str1) is not None) or (
                 SpeedUpUtils.find_hex_offset(machofile, Cocos.cocos_hex_str2) is not None)):
             engine_name = "cocos"
             print("=========检测到该游戏是Cocos游戏===========")
-            Speedup_Address,Jump_Address=Cocos.cocos_modify(machofile)
-        elif (os.path.isfile(f"{resource_file}FrameWorks/UnityFramework.framework/UnityFramework")):
+            Speedup_Address,Jump_Address=Cocos.cocos_modify(machofile,"0x2000")
+        elif (os.path.exists(il2cpp_path)):
             print("=========检测到该游戏是Unity游戏===========")
             engine_name = "unity"
-            Speedup_Address, Jump_Address= Unity.unity_get_addr(machofile, f"{resource_file}FrameWorks/UnityFramework.framework/UnityFramework",
-                                 f"{resource_file}Data/Managed/Metadata/global-metadata.dat")
+            Speedup_Address, Jump_Address= Unity.unity_get_addr(machofile, il2cpp_path,
+                                 mata_path)
         elif (SpeedUpUtils.find_string_offset(machofile, "webView:didFinishNavigation") is not None):
             engine_name = "web"
             Speedup_Address, Jump_Address=0,0

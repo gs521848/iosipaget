@@ -1,4 +1,4 @@
-from ios.SpeedUpUtils import *
+from SpeedUpUtils import *
 
 # print(find_string_offset("output/Payload/com.egsdk.hywgldyz.app/hyrz","Error setting audio session active!"))
 

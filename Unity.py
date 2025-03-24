@@ -6,17 +6,21 @@ import SpeedUpUtils
 
 def unity_get_addr(macho, unity_file, metadata_file):
     try:
-        file_path = os.path.join('il2CppDumper', 'script.json')
+        file_path = os.path.join('./Il2CppDumper-linux', 'script.json')
         if os.path.exists(file_path):
             print("已经删除了script.json")
             os.remove(file_path)
-        il2cpp_path = "./Il2CppDumper/Il2CppDumper"
-        print(f"执行代码：{il2cpp_path} {unity_file} {metadata_file}")
+        else:
+            print(f'meizhaodao{file_path}')
+        if os.path.exists(metadata_file):
+            print("metadata ok")
+        il2cpp_path = "./Il2CppDumper-linux/Il2CppDumper"
+        print(f"执行代码：{il2cpp_path} {unity_file} {metadata_file} ./Il2CppDumper-linux")
         print("Current Working Directory:", os.getcwd())
         if not os.path.exists(metadata_file):
             raise FileNotFoundError(f"File not found: {metadata_file}")
 
-        command = [il2cpp_path, unity_file, metadata_file, "./Unity_Output"]
+        command = [il2cpp_path, unity_file, metadata_file, "./Il2CppDumper-linux"]
         process = subprocess.Popen(
             command,
             stdout=subprocess.PIPE,
